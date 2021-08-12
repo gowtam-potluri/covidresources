@@ -144,8 +144,10 @@ class IssueEdit extends React.Component {
     const { issue: { district, helpreq } } = this.state;
     const { issue: { name, quantity, description } } = this.state;
     const { issue: { created, phone } } = this.state;
-    const username = issue.username;
-    
+    var username = issue.username;
+    if(!username){
+      username="null";
+    }
   
     
     const user = this.context;
@@ -252,6 +254,13 @@ class IssueEdit extends React.Component {
             <FormGroup>
               <Col smOffset={3} sm={6}>
                 <ButtonToolbar>
+                {username=="null" &&<Button
+                    disabled={!user.signedIn}
+                    bsStyle="primary"
+                    type="submit"
+                  >
+                    Submit
+                  </Button> }
                 {username == user.givenName &&
                 <Button
                     disabled={!user.signedIn}
@@ -261,7 +270,7 @@ class IssueEdit extends React.Component {
                     Submit
                   </Button>
   }
-  {username != user.givenName 
+  {username!="null"&&username != user.givenName 
     && <Alert bsStyle="danger" onDismiss={this.dismissValidation}>
     Cannot Modify other users posts! Please go back
   </Alert>
